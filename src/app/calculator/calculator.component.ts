@@ -9,6 +9,7 @@ export class CalculatorComponent implements OnInit {
   displayedNumber: string = "";
   equation: string = "";
   operator: string = "";
+  answers: string[] = [];
 
   constructor() { }
 
@@ -20,14 +21,14 @@ export class CalculatorComponent implements OnInit {
 
     if (this.displayedNumber === "0") {
       this.displayedNumber = numberString;
-      return
+      return;
     }
     this.displayedNumber = this.displayedNumber + numberString;
   }
 
   onPeriodClicked(periodValue: string) {
     if (this.displayedNumber.includes(".")) {
-      return
+      return;
     }
     if (this.displayedNumber === "") {
       this.displayedNumber = "0" + periodValue;
@@ -51,13 +52,20 @@ export class CalculatorComponent implements OnInit {
   }
 
   onEqualsClicked() {
+    if (this.operator === "")
+      return;
     this.equation = `${this.equation} ${this.displayedNumber}`;
     this.operator = "";
     this.displayedNumber = eval(this.equation).toString();
+    this.answers.unshift(this.displayedNumber);
     this.equation = "";
   }
 
   onBackClicked() {
     this.displayedNumber = this.displayedNumber.slice(0, -1)
+  }
+
+  onHistoryClicked(event: any) {
+    this.displayedNumber = event.target.value;
   }
 }
