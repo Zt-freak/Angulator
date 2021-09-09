@@ -57,6 +57,9 @@ export class CalculatorComponent implements OnInit {
     this.equation = `${this.equation} ${this.displayedNumber}`;
     this.operator = "";
     this.displayedNumber = eval(this.equation).toString();
+    
+    if (this.displayedNumber == "Infinity" || this.displayedNumber == "NaN")
+      window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     this.answers.unshift(this.displayedNumber);
     this.equation = "";
   }
