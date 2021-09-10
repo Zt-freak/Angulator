@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
@@ -15,6 +15,31 @@ export class CalculatorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) { 
+    if (!isNaN(Number(event.key))) {
+      this.onNumberClicked(Number(event.key));
+    }
+    if (event.key === ".") {
+      this.onPeriodClicked(event.key)
+    }
+    if (
+      event.key === "+" ||
+      event.key === "-" ||
+      event.key === "*" ||
+      event.key === "/"
+    ) {
+      this.onOperatorClicked(event.key);
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      this.onEqualsClicked();
+    }
+    if (event.key === "Backspace") {
+      this.onBackClicked();
+    }
   }
 
   onNumberClicked(numberValue: number) {
