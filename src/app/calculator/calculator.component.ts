@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorComponent implements OnInit {
   displayedNumber: string = "";
+  howBlurry: number = 0;
   equation: string = "";
   operator: string = "";
   answers: string[] = [];
@@ -52,14 +53,21 @@ export class CalculatorComponent implements OnInit {
   }
 
   onEqualsClicked() {
+    if (this.displayedNumber == "420") {
+      this.howBlurry += 1;
+      document.body.style.filter = `blur(${this.howBlurry}px)`
+    }
+    
     if (this.operator === "")
       return;
     this.equation = `${this.equation} ${this.displayedNumber}`;
     this.operator = "";
     this.displayedNumber = eval(this.equation).toString();
     
-    if (this.displayedNumber == "Infinity" || this.displayedNumber == "NaN")
+    if (this.displayedNumber == "Infinity" || this.displayedNumber == "NaN") {
+      console.error("foutmelding")
       window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    }
     this.answers.unshift(this.displayedNumber);
     this.equation = "";
   }
