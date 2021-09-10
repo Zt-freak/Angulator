@@ -1,25 +1,35 @@
-<div class="calculator">
-    <div class="number-display">
-        <div class="number">
-            {{displayedNumber}}
+<div class="calculator-container">
+    <div class="calculator">
+        <h1>The Angulator</h1>
+        <div class="number-display">
+            <div class="number">
+                {{displayedNumber}}
+            </div>
+            <div class="equation">
+                {{equation}}
+            </div>
         </div>
-        <div class="equation">
-            {{equation}}
+        <div class="buttonscontainer">
+            <div class="numpad">
+                <div *ngFor="let number of [1,2,3,4,5,6,7,8,9,0]">
+                    <app-number-button [buttonValue]="number" (emitter)="onNumberClicked($event)"></app-number-button>
+                </div >
+                <app-period-button (emitter)="onPeriodClicked($event)"></app-period-button>
+                <button (click)="onBackClicked()" class="calcbutton calcbutton--back">DEL</button>
+            </div>
+            <div class="operators">
+                <div *ngFor="let operator of ['+', '-', '*', '/']">
+                    <app-operator-button [buttonValue]="operator" (emitter)="onOperatorClicked($event)"></app-operator-button>
+                </div >
+                <button (click)="onEqualsClicked()" class="calcbutton calcbutton--equals">=</button>
+            </div>
         </div>
+        <app-react-wrapper></app-react-wrapper>
     </div>
-    <div class="buttonscontainer">
-        <div class="numpad">
-            <div *ngFor="let number of [1,2,3,4,5,6,7,8,9,0]">
-                <app-number-button [buttonValue]="number" (emitter)="onNumberClicked($event)"></app-number-button>
-            </div >
-            <app-period-button (emitter)="onPeriodClicked($event)"></app-period-button>
-            <button (click)="onBackClicked()" class="calcbutton calcbutton--back">DEL</button>
-        </div>
-        <div class="operators">
-            <div *ngFor="let operator of ['+', '-', '*', '/']">
-                <app-operator-button [buttonValue]="operator" (emitter)="onOperatorClicked($event)"></app-operator-button>
-            </div >
-            <button (click)="onEqualsClicked()" class="calcbutton calcbutton--equals">=</button>
+    <div class="historybox">
+        <span>history</span>
+        <div *ngFor="let answer of answers">
+            <button (click)="onHistoryClicked($event)" class="historybox-answer" value={{answer}}>{{answer}}</button>
         </div>
     </div>
 </div>
